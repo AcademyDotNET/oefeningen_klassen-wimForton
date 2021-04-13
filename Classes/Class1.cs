@@ -194,4 +194,44 @@ namespace Classes
             }
         }
     }
+    class BankAccount {
+        private bool geldig = true;
+        private double rekeningStand = 0;
+        public bool KlantStatus
+        {
+            get {
+                return geldig;
+            }
+            set
+            {
+                geldig = value;
+            }
+        }
+        public double Stort
+        {
+            set {
+                rekeningStand += value;
+            }
+        }
+        public double HaalAf
+        {
+            set
+            {
+                rekeningStand -= value;
+            }
+        }
+        public double CheckRekening
+        {
+            get
+            {
+                return rekeningStand;
+            }
+        }
+        public void SchrijfOver(double amount, BankAccount to)
+        {
+            rekeningStand -= amount;
+            to.Stort = amount;
+        }
+
+    }
 }

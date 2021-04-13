@@ -54,6 +54,13 @@ namespace Classes
             basketBaller1.Shot();
             basketBaller1.Shot();
             */
+            BankAccount rekening1 = new BankAccount();
+            BankAccount rekening2 = new BankAccount();
+            rekening1.Stort = 50;
+            rekening1.HaalAf = 5;
+            rekening1.SchrijfOver(20, rekening2);
+            Console.WriteLine($"rek1: {rekening1.CheckRekening}");
+            Console.WriteLine($"rek2: {rekening2.CheckRekening}");
 
 
 
