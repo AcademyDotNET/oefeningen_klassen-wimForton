@@ -53,7 +53,6 @@ namespace MemoryManagment
         public string Naam { get; set; }
         public int Nummer { get; set; }
         private int level;
-        /*
         private int average;
         private int total;
         private int hP_Full;
@@ -62,9 +61,7 @@ namespace MemoryManagment
         private int specialAttack_Full;
         private int specialDefense_Full;
         private int speed_Full;
-        */
-
-        public void InitPokemon(String naam, int health, int attack, int defense, int specialAttack, int specialDefense,int speed)
+        public void InitPokemon(String naam, int health, int attack, int defense, int specialAttack, int specialDefense, int speed)
         {
             Naam = naam;
             HP_Base = health;
@@ -74,7 +71,6 @@ namespace MemoryManagment
             SpecialDefense_Base = specialDefense;
             Speed_Base = speed;
         }
-
         public int HP_Base
         {
             get { return hP_Base; }
