@@ -6,7 +6,7 @@ namespace MemoryManagment
     {
         static void Main(string[] args)
         {
-            pokemon Bulbasaur = new pokemon();
+            Pokemon Bulbasaur = new Pokemon();
             Bulbasaur.Nummer = 1;
             Bulbasaur.Naam = "Bulbasaur";
             Bulbasaur.HP_Base = 45;
@@ -16,7 +16,7 @@ namespace MemoryManagment
             Bulbasaur.SpecialDefense_Base = 65;
             Bulbasaur.Speed_Base = 45;
 
-            pokemon Ivysaur = new pokemon();
+            Pokemon Ivysaur = new Pokemon();
             Ivysaur.Nummer = 1;
             Ivysaur.Naam = "Ivysaur";
             Ivysaur.HP_Base = 45;

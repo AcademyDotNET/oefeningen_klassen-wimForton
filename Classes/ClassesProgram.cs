@@ -54,6 +54,8 @@ namespace Classes
             basketBaller1.Shot();
             basketBaller1.Shot();
             */
+            Basketballer.SimuleerWedstrijd(new Basketballer("Johny"), new Basketballer("Freddy"));
+            /*
             BankAccount rekening1 = new BankAccount();
             BankAccount rekening2 = new BankAccount();
             rekening1.Stort = 50;
@@ -61,7 +63,7 @@ namespace Classes
             rekening1.SchrijfOver(20, rekening2);
             Console.WriteLine($"rek1: {rekening1.CheckRekening}");
             Console.WriteLine($"rek2: {rekening2.CheckRekening}");
-
+            */
 
 
         }

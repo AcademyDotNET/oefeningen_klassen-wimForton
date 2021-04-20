@@ -6,6 +6,45 @@ namespace Classes
 {
     public enum Klassen { EA1, EA2, EA3, EB1, EB2 }
     public enum basketbalNiveaus { amateurs, derde, tweede, eerste }
+    class Meetlat
+    {
+        private double LengteInM;
+        private double LengteInCm;
+        private double LengteInKm;
+        private double LengteInVoet;
+        public Meetlat()
+        {
+            LengteInM = 1;
+        }
+        public double SetLengte
+        {
+            set
+            {
+                LengteInM = value;
+            }
+        }
+        public double GetLengteInCm
+        {
+            get
+            {
+                return LengteInM / 100;
+            }
+        }
+        public double GetLengteInKm
+        {
+            get
+            {
+                return LengteInM * 0.001;
+            }
+        }
+        public double GetLengteInVoet
+        {
+            get
+            {
+                return LengteInM * 3.2808;
+            }
+        }
+    }
     class RapportModule
     {
         public double percentage = 0;
@@ -160,6 +199,28 @@ namespace Classes
         private bool reserve = false;
         private basketbalNiveaus niveau = basketbalNiveaus.amateurs;
 
+        public Basketballer(){
+            naam = "unnamed";
+        }
+        public Basketballer(string innaam)
+        {
+            naam = innaam;
+        }
+        static public void SimuleerSpeler(Basketballer testspeler) {
+            testspeler.Shot();
+        }
+        static public void SimuleerWedstrijd(Basketballer speler1, Basketballer speler2) {
+            int result1 = speler1.Shot();
+            int result2 = speler2.Shot();
+            if (result1 != 2 && result2 != 2 || result1 == 2 && result2 == 2)
+            {
+                Console.WriteLine($"gelijkspel");
+            } else if (result1 == 2 && result2 != 2) {
+                Console.WriteLine($"{speler1.naam} wint");
+            }else{
+                Console.WriteLine($"{speler2.naam} wint");
+            }
+        }
         public void StelIn(string inNaam, int inRugNummer, bool inDoelman, bool inReserve, basketbalNiveaus inNiveau)
         {
             naam = inNaam;
@@ -168,13 +229,14 @@ namespace Classes
             reserve = inReserve;
             niveau = inNiveau;
         }
+
         public void StelUEensVoor() {
             string stelVoorDoelman =  $"ik ben {(doelMan ? "een": "geen")} doelman";
             string stelVoorReserve = $"ik ben {(reserve ? "een" : "geen")} reserve";
             Console.WriteLine($"ik ben {naam}, mijn rugnummer is {rugNummer}, {stelVoorDoelman}, {stelVoorReserve}, ik speel in {niveau}");
         }
 
-        public void Shot()
+        public int Shot()
         {
             Random shotrandom = new Random();
             int shotResult = shotrandom.Next(0, 3);
@@ -192,6 +254,7 @@ namespace Classes
                 default:
                     break;
             }
+            return shotResult;
         }
     }
     class BankAccount {
@@ -233,5 +296,29 @@ namespace Classes
             to.Stort = amount;
         }
 
+    }
+    class DigitaleKluis
+    {
+        private int _Code;
+        private bool _CanShowCode;
+        public DigitaleKluis(){
+
+        }
+        public int Code
+        {
+            get {
+                if (!_CanShowCode)
+                {
+                    return -666;
+                }
+                else 
+                {
+                    return _Code;
+                }
+            }
+            set { 
+
+            }
+        }
     }
 }

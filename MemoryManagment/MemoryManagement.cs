@@ -41,7 +41,7 @@ namespace MemoryManagment
             }
         }
     }*/
-    class pokemon
+    class Pokemon
     {
 
         private int hP_Base;
