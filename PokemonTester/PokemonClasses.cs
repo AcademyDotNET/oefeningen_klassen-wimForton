@@ -6,41 +6,6 @@ using System.Threading.Tasks;
 
 namespace PokemonClasses
 {
-    /*class Meetlat
-    {
-        private double LengteInM;
-        private double LengteInCm;
-        private double LengteInKm;
-        private double LengteInVoet;
-        public double SetLengte
-        {
-            set 
-            {
-                LengteInM = value;
-            }
-        }
-        public double GetLengteInCm
-        {
-            get
-            {
-                return LengteInM / 100;
-            }
-        }
-        public double GetLengteInKm
-        {
-            get
-            {
-                    return LengteInM * 0.001;
-            }
-        }
-        public double GetLengteInVoet
-        {
-            get
-            {
-                return LengteInM * 3.2808;
-            }
-        }
-    }*/
     class Pokemon
     {
 
@@ -84,6 +49,32 @@ namespace PokemonClasses
             SpecialAttack_Base = specialAttack;
             SpecialDefense_Base = specialDefense;
             Speed_Base = speed;
+        }
+        public override string ToString()
+        {
+            string myOutputString = "";
+            myOutputString += base.ToString() + "\n\n";
+            myOutputString += $"{Naam} level {Level}\n";
+            myOutputString += $"Base stats:\n";
+            myOutputString += $"\thealth {hP_Base}\n";
+            myOutputString += $"\tattack {attack_Base}\n";
+            
+            myOutputString += $"\tdefense {defense_Base}\n";
+            myOutputString += $"\tspecialAttack {specialAttack_Base}\n";
+            myOutputString += $"\tspecialDefense {specialDefense_Base}\n";
+            myOutputString += $"\tspeed {speed_Base})\n";
+            myOutputString += $"\trandomPokemonsCount {randomPokemonsCount}";
+            myOutputString += $"\t\t\tTotalBattlesFought {TotalBattlesFought}\n";
+
+            myOutputString += $"Full stats:\n";
+            myOutputString += $"\thealth {HP_Full}\n";
+            myOutputString += $"\tattack {Attack_Full}\n";
+            myOutputString += $"\tdefense {Defense_Full}\n";
+            myOutputString += $"\tspecialAttack {SpecialAttack_Full}\n";
+            myOutputString += $"\tspecialDefense {SpecialDefense_Full}\n";
+            myOutputString += $"\tspeed {Speed_Full}\n";
+            return myOutputString;
+
         }
         public static Pokemon GeneratorPokemon() {
             Pokemon myPokemon = new Pokemon();
@@ -276,30 +267,7 @@ namespace PokemonClasses
         }
         public void ShowInfo()
         {
-            Console.WriteLine($"{Naam} (level {Level})");
-            Console.WriteLine($"Base stats:");
-            Console.Write($"\thealth {hP_Base}");
-            Console.Write($"\tattack {attack_Base}");
-            Console.Write($"\tdefense {defense_Base}");
-            Console.Write($"\tspecialAttack {specialAttack_Base}");
-            Console.Write($"\tspecialDefense {specialDefense_Base}");
-            Console.WriteLine($"\tspeed {speed_Base})");
-            Console.Write($"\trandomPokemonsCount {randomPokemonsCount}");
-            Console.WriteLine($"\t\t\tTotalBattlesFought {TotalBattlesFought}");
-
-            Console.WriteLine($"Full stats:");
-            Console.WriteLine($"\thealth {HP_Full})");
-            Console.WriteLine($"\tattack {Attack_Full})");
-            Console.WriteLine($"\tdefense {Defense_Full})");
-            Console.WriteLine($"\tspecialAttack {SpecialAttack_Full})");
-            Console.WriteLine($"\tspecialDefense {SpecialDefense_Full})");
-            Console.WriteLine($"\tspeed {Speed_Full})");
-
-            /*         private int attack_Base;
-         private int defense_Base;
-         private int specialAttack_Base;
-         private int specialDefense_Base;
-         private int speed_Base;*/
+            Console.WriteLine(this);
         }
 
     }
