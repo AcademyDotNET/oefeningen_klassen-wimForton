@@ -88,9 +88,10 @@ namespace ClassenOvererving
         public virtual void ChangeVelocity(ConsoleKeyInfo richting)
         {
         }
-        public void collide()
+        public static void collide()
         {
-
+            //for (int i = 0; ) { //todo
+            //}
         }
 
             public void Update()
