@@ -64,6 +64,7 @@ namespace ClassenOvererving
         public double Y { get { return y; } }
         protected static int ballCount = 0;
         protected int id = 0;
+        public int collidedInvisibleTime = 0;
 
         private double lastx = 0;
         private double lasty = 0;
@@ -71,7 +72,7 @@ namespace ClassenOvererving
         public double y = 0;
         public double vx = 0;
         public double vy = 0;
-        protected char drawChar = 'O';
+        public char drawChar = 'O';
         protected ConsoleColor drawColor = ConsoleColor.White;
 
         public Ball(int xin, int yin, int vxin, int vyin, int idin)
@@ -88,10 +89,30 @@ namespace ClassenOvererving
         public virtual void ChangeVelocity(ConsoleKeyInfo richting)
         {
         }
-        public static void collide()
+        public static void collide(List<Ball> balletjes)
         {
-            //for (int i = 0; ) { //todo
-            //}
+            Random myDoubleRandom = new Random();
+            for (int i = 0; i < balletjes.Count; i++) {
+                for (int j = 0; j < balletjes.Count; j++)
+                {
+                    if (balletjes[i].collidedInvisibleTime == 0)
+                    {
+                        if ((int)balletjes[i].x == (int)balletjes[j].x && (int)balletjes[i].y == (int)balletjes[j].y && i != j)
+                        {
+                            double ran1 = myDoubleRandom.NextDouble();
+                            double ran2 = myDoubleRandom.NextDouble();
+                            balletjes[i].vx = (ran1 - 0.5) * 2;//balletjes[i].vx * 0.7 + balletjes[j].vx * 0.3;
+                            balletjes[i].vy = (ran2 - 0.5) * 4;// = balletjes[i].vy * 0.7 + balletjes[j].vy * 0.3;
+                            balletjes[i].collidedInvisibleTime = 100;
+                        }
+                    }
+                    else
+                    {
+                        if (balletjes[i].collidedInvisibleTime > 0) balletjes[i].collidedInvisibleTime--;
+                    }
+                    balletjes[i].drawChar = Convert.ToChar(balletjes[i].collidedInvisibleTime%10 + 48);
+                }
+            }
         }
 
             public void Update()

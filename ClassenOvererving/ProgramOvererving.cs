@@ -19,11 +19,10 @@ namespace ClassenOvererving
             Console.WindowHeight = 40;
             Console.WindowWidth = 60;
             List<Ball> myBalletjes = new List<Ball>();
-            //Ball[] myBalletjes = new Ball[5];
             Random myRandom = new Random();
             myBalletjes.Add(new PlayerBall(20, 20, 0, 0, 0));
 
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 10; i++)
             {
                 int x = myRandom.Next(2, Console.WindowWidth);
                 int y = myRandom.Next(2, Console.WindowHeight);
@@ -32,24 +31,19 @@ namespace ClassenOvererving
                 if (i % 2 == 0) {
                     vx *= -1;
                 }
-                /*if (i == 0)
-                {
-                    myBalletjes[i] = new PlayerBall(20, 20, 0, 0);
-                }
-                else {
-                    myBalletjes[i] = new Ball(x, y, vx, vy);
-                }*/
-
                 myBalletjes.Add(new Ball(x, y, vx, vy, i+1));
             }
-            //Ball myBall = new Ball(2,6,1,1);
+
             while (true)
             {
+                Ball.collide(myBalletjes);
                 foreach (var item in myBalletjes)
                 {
+
                     item.Update();
                     item.Draw();
                 }
+
                 if (Console.KeyAvailable)
                 {
                     var key = Console.ReadKey();
