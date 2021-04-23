@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemoryManagment", "MemoryMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonTester", "PokemonTester\PokemonTester.csproj", "{10D0AB53-1D6A-4C3D-9E9B-BFCCE5F8A54E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "List", "List\List.csproj", "{C15CB7A2-2B30-4C94-B7FA-76FFDC49CDA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "List", "List\List.csproj", "{C15CB7A2-2B30-4C94-B7FA-76FFDC49CDA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassenOvererving", "ClassenOvererving\ClassenOvererving.csproj", "{3A124848-5275-4A2C-8AC2-225ACA119853}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C15CB7A2-2B30-4C94-B7FA-76FFDC49CDA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C15CB7A2-2B30-4C94-B7FA-76FFDC49CDA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C15CB7A2-2B30-4C94-B7FA-76FFDC49CDA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A124848-5275-4A2C-8AC2-225ACA119853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A124848-5275-4A2C-8AC2-225ACA119853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A124848-5275-4A2C-8AC2-225ACA119853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A124848-5275-4A2C-8AC2-225ACA119853}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
