@@ -10,7 +10,9 @@ namespace PokemonTester
         {
             //PlayPokemon();
             Pokemon myPokemon1 = Pokemon.GeneratorPokemon();
-            Console.WriteLine(myPokemon1);
+            Pokemon myPokemon2 = Pokemon.GeneratorPokemon();
+            Console.WriteLine(myPokemon1.Equals(myPokemon2));
+            Console.WriteLine(myPokemon1.Equals(myPokemon1));
         }
 
         private static void PlayPokemon()

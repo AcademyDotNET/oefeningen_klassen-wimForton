@@ -21,13 +21,14 @@ namespace ClassenOvererving
             List<Ball> myBalletjes = new List<Ball>();
             Random myRandom = new Random();
             myBalletjes.Add(new PlayerBall(20, 20, 0, 0, 0));
+            int drawTrigger = 0;
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 40; i++)
             {
                 int x = myRandom.Next(2, Console.WindowWidth);
                 int y = myRandom.Next(2, Console.WindowHeight);
-                int vx = myRandom.Next(1, 3);
-                int vy = myRandom.Next(1, 6);
+                int vx = myRandom.Next(1, 1);
+                int vy = myRandom.Next(1, 2);
                 if (i % 2 == 0) {
                     vx *= -1;
                 }
@@ -36,12 +37,13 @@ namespace ClassenOvererving
 
             while (true)
             {
+                drawTrigger++;
                 Ball.collide(myBalletjes);
                 foreach (var item in myBalletjes)
                 {
-
                     item.Update();
-                    item.Draw();
+                    if (drawTrigger % 10 == 0)
+                        item.Draw();
                 }
 
                 if (Console.KeyAvailable)
@@ -51,45 +53,12 @@ namespace ClassenOvererving
 
                 }
 
-                System.Threading.Thread.Sleep(1);
+                if (drawTrigger%10 == 0) System.Threading.Thread.Sleep(10);
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine(Ball.score);
             }
         }
-        private static void BalSpelInteractief()
-        {
-            Console.CursorVisible = false;
-            Console.WindowHeight = 20;
-            Console.WindowWidth = 30;
-            Ball b1 = new Ball(4, 4, 1, 0, 0);
-            PlayerBall player = new PlayerBall(10, 10, 0, 0, 1);
-            while (true)
-            {
-
-                Console.Clear();
-
-                //Ball
-                b1.Update();
-                b1.Draw();
-
-                //SpelerBall
-                if (Console.KeyAvailable)
-                {
-                    var key = Console.ReadKey();
-                    player.ChangeVelocity(key);
-                }
-
-                player.Update();
-                player.Draw();
-
-                //Check collisions
-                if (Ball.CheckHit(b1, player))
-                {
-                    Console.Clear();
-                    Console.WriteLine("Gewonnen!");
-                    Console.ReadLine();
-                }
-                System.Threading.Thread.Sleep(100);
-            }
-        }
+  
 
         private static void ZiekenHuis()
         {

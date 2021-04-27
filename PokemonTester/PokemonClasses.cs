@@ -50,6 +50,21 @@ namespace PokemonClasses
             SpecialDefense_Base = specialDefense;
             Speed_Base = speed;
         }
+        public override bool Equals(Object o)
+        {
+            bool gelijk = true;
+            Pokemon temp = (Pokemon)o; //Zie opmerking na code!
+
+            gelijk = !(GetType() != o.GetType() ||
+                    Naam != temp.Naam ||
+                    hP_Base != temp.hP_Base ||
+                    attack_Base != temp.attack_Base ||
+                    defense_Base != temp.defense_Base ||
+                    specialAttack_Base != temp.specialAttack_Base ||
+                    specialDefense_Base != temp.specialDefense_Base ||
+                    speed_Base != temp.speed_Base);
+            return gelijk;
+        }
         public override string ToString()
         {
             string myOutputString = "";

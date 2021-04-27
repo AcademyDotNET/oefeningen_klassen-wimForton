@@ -63,17 +63,21 @@ namespace ClassenOvererving
         public double X { get { return x; } }
         public double Y { get { return y; } }
         protected static int ballCount = 0;
+        public static int score = 0;
+        protected static int WindowWidth = Console.WindowWidth;
+        protected static int WindowHeight = Console.WindowHeight;
         protected int id = 0;
         public int collidedInvisibleTime = 0;
+        public int drawTrigger = 0;
 
-        private double lastx = 0;
-        private double lasty = 0;
+        private int lastx = 0;
+        private int lasty = 0;
         public double x = 0;
         public double y = 0;
         public double vx = 0;
         public double vy = 0;
         public char drawChar = 'O';
-        protected ConsoleColor drawColor = ConsoleColor.White;
+        protected ConsoleColor drawColor = ConsoleColor.DarkCyan;
 
         public Ball(int xin, int yin, int vxin, int vyin, int idin)
         {
@@ -92,18 +96,52 @@ namespace ClassenOvererving
         public static void collide(List<Ball> balletjes)
         {
             Random myDoubleRandom = new Random();
+            
             for (int i = 0; i < balletjes.Count; i++) {
-                for (int j = 0; j < balletjes.Count; j++)
+                for (int j = balletjes.Count - 1; j >= 0; j--)
                 {
                     if (balletjes[i].collidedInvisibleTime == 0)
                     {
-                        if ((int)balletjes[i].x == (int)balletjes[j].x && (int)balletjes[i].y == (int)balletjes[j].y && i != j)
+                        if ((int)balletjes[i].x == (int)balletjes[j].x && (int)balletjes[i].y == (int)balletjes[j].y)
                         {
-                            double ran1 = myDoubleRandom.NextDouble();
-                            double ran2 = myDoubleRandom.NextDouble();
-                            balletjes[i].vx = (ran1 - 0.5) * 2;//balletjes[i].vx * 0.7 + balletjes[j].vx * 0.3;
-                            balletjes[i].vy = (ran2 - 0.5) * 4;// = balletjes[i].vy * 0.7 + balletjes[j].vy * 0.3;
-                            balletjes[i].collidedInvisibleTime = 100;
+                            double ran1 = myDoubleRandom.NextDouble() - 0.5;
+                            double ran2 = myDoubleRandom.NextDouble() - 0.5;
+
+                            double influence_a_b = 0.5;
+                            if (i == 0)
+                            {
+                                influence_a_b = 0.02;
+                                ran1 *= 0.0;
+                                ran2 *= 0.0;                           
+                            }
+                            else if (j == 0) {
+                                influence_a_b = 0.95;
+                                ran1 *= 0.2;
+                                ran2 *= 0.2;
+                                balletjes[i].collidedInvisibleTime = 10;
+                                balletjes[i].vx = Lerp(balletjes[i].vx, balletjes[j].vx, influence_a_b) + ran1;
+                                balletjes[i].vy = Lerp(balletjes[i].vy, balletjes[j].vy, influence_a_b) + ran2;
+                            }
+                            else
+                            {
+                                ran1 *= 0.0;
+                                ran2 *= 0.0;
+                            }
+                            //balletjes[i].vx += ran1;
+                            //balletjes[i].vy += ran2;
+
+
+                            //balletjes[j].vx = Lerp(balletjes[i].vx, balletjes[j].vx, 1 - influence_a_b);
+                            //balletjes[j].vy = Lerp(balletjes[i].vy, balletjes[j].vy, 1 - influence_a_b);
+
+                            /*
+                            balletjes[i].vx *= -1;//
+                            balletjes[j].vx *= -1;//
+                            balletjes[i].vy *= -1;//
+                            balletjes[j].vy *= -1;//
+                            */
+                            //balletjes[i].collidedInvisibleTime = 10;
+                            //balletjes[j].collidedInvisibleTime = 20;
                         }
                     }
                     else
@@ -113,40 +151,50 @@ namespace ClassenOvererving
                     balletjes[i].drawChar = Convert.ToChar(balletjes[i].collidedInvisibleTime%10 + 48);
                 }
             }
-        }
 
+        }
+        private static double Lerp(double a, double b, double weight) {
+            double result = a * (1 - weight) + b * weight;
+
+            return result;
+        }
             public void Update()
         {
-            Console.SetCursorPosition((int)x, (int)y);
-            Console.Write(" ");
-            vy *= 0.99;
-            vy += 0.02;
-            vx *= 0.995;
+            drawTrigger++;
+
+            if (y < 6)
+            {
+                score++;
+            }
+            vy *= 0.998;
+            vy += 0.004;
+            vx *= 0.998;
             x += vx;
             y += vy;
-            if (x >= Console.WindowWidth || x < 0)
+            if (x >= WindowWidth || x < 0)
             {
                 vx *= -1;
                 x += vx;
             }
-            if (y >= Console.WindowHeight || y < 0)
+            if (y >= WindowHeight || y < 2)
             {
                 vy *= -1;
                 y += vy;
             }
         }
         public void Draw()
-        {   /*
-            Console.SetCursorPosition(lastx, lasty);
-            Console.Write(drawChar);
-            lastx = x;
-            lasty = y;
-            */
-            Console.SetCursorPosition((int)x, (int)y);
-            Console.ForegroundColor = drawColor;
-            Console.Write(drawChar);
-            Console.ResetColor();
-
+        {
+            //if (drawTrigger % 10 == 0)
+            //{
+                Console.SetCursorPosition(lastx, lasty);
+                Console.Write(" ");
+                lastx = (int)x;
+                lasty = (int)y;
+                Console.SetCursorPosition((int)x, (int)y);
+                Console.ForegroundColor = drawColor;
+                Console.Write(drawChar);
+                Console.ResetColor();
+            //}
         }
 
         static public bool CheckHit(Ball ball1, Ball ball2)
@@ -163,7 +211,7 @@ namespace ClassenOvererving
         public PlayerBall(int xin, int yin, int vxin, int vyin, int idin) : base(xin, yin, vxin, vyin, idin)
         {
             drawChar = 'X';
-            drawColor = ConsoleColor.Blue;
+            drawColor = ConsoleColor.White;
             id = idin;
         }
 
@@ -172,16 +220,16 @@ namespace ClassenOvererving
             switch (richting.Key)
             {
                 case ConsoleKey.UpArrow:
-                    vy--;
+                    vy -= 0.3;
                     break;
                 case ConsoleKey.DownArrow:
-                    vy++;
+                    vy += 0.3;
                     break;
                 case ConsoleKey.LeftArrow:
-                    vx--;
+                    vx -= 0.3;
                     break;
                 case ConsoleKey.RightArrow:
-                    vx++;
+                    vx += 0.3;
                     break;
                 default:
                     break;
