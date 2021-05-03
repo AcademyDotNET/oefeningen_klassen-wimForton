@@ -10,104 +10,61 @@ namespace BoardGame
     {
         void Move();
     }
-    class vector2D
-    {
-        public int X { get; set; } = 0;
-        public int Y { get; set; } = 0;
-        public vector2D(int inX, int inY)
-        {
-            X = inX; Y = inY;
-        }
-        public vector2D Up()
-        {
-            vector2D temp = new vector2D(X,Y);
-            temp.Y--;
-            return temp;
-        }
-        public vector2D Down()
-        {
-            vector2D temp = new vector2D(X, Y);
-            temp.Y++;
-            return temp;
-        }
-        public vector2D Left()
-        {
-            vector2D temp = new vector2D(X, Y);
-            temp.X--;
-            return temp;
-        }
-        public vector2D Right()
-        {
-            vector2D temp = new vector2D(X, Y);
-            temp.X++;
-            return temp;
-        }
-    }
+
 
     abstract class GameElement
     {
-        public static vector2D worldPos = new vector2D(0,0);
+        public static vector worldPos = new vector(0, 0);
         public static bool playerNeedsUpdate = true;
-        public vector2D position = new vector2D(0, 0);
+        //public vector2D position = new vector2D(0, 0);
         protected ConsoleColor backGround = ConsoleColor.Black;
         protected ConsoleColor foreGround = ConsoleColor.White;
         protected ConsoleColor backGroundPlayField = ConsoleColor.DarkGray;
         protected ConsoleColor foreGroundPlayField = ConsoleColor.DarkCyan;
         protected string drawChar = " ";
-        public static void MoveIn2DArray(GameElement[,] myPlayfield, vector2D source, vector2D dest)
+
+        public GameElement()
         {
-            GameElement temp = myPlayfield[source.X, source.Y];
-            myPlayfield[dest.X, dest.Y] = temp;
-            myPlayfield[source.X, source.Y] = new EmptyTile(source.X, source.Y);
+            //position.X = inX;
+            //position.Y = inY;
         }
-        public GameElement(int inX, int inY)
-        {
-            position.X = inX;
-            position.Y = inY;
-        }
-        public virtual void Draw()
+        public virtual void Draw(vector position)
         {
             Console.BackgroundColor = backGround;
             Console.ForegroundColor = foreGround;
-            Console.SetCursorPosition(position.X, position.Y);
+            Console.SetCursorPosition((int)position.X, (int)position.Y);
             Console.Write(drawChar);
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
         }
-        public virtual void move(GameElement[,] myPlayfield, int input)
+        public static void MoveIn2DArray(GameElement[,] myPlayfield, vector source, vector dest)
         {
-            if (input == 0)
+            if (dest.TestRange(0, 19, 0, 19))
             {
-                if (position.Y > 0)
-                {
-                    //vector2D temp
-                    GameElement.MoveIn2DArray(myPlayfield, position, new vector2D(position.X, position.Y--));
-                }
-
-            }
-            if (input == 1)
-            {
-                if (position.Y < 19)
-                {
-                    GameElement.MoveIn2DArray(myPlayfield, position, position.Down());
-                }
-            }
-            if (input == 2)
-            {
-                if (position.X > 0)
-                {
-                    GameElement.MoveIn2DArray(myPlayfield, position, position.Left());
-                }
-            }
-            if (input == 3)
-            {
-                if (position.X < 19)
-                {
-                    GameElement.MoveIn2DArray(myPlayfield, position, position.Right());
-                }
+                GameElement temp = myPlayfield[(int)source.X, (int)source.Y];
+                myPlayfield[(int)dest.X, (int)dest.Y] = temp;
+                myPlayfield[(int)source.X, (int)source.Y] = new EmptyTile();
             }
         }
-        public virtual void DoGameLogic(GameElement[,] myPlayfield, string input = "")
+        public virtual void move(vector position, GameElement[,] myPlayfield, int input)
+        {
+            switch (input) 
+            {
+                case 0:
+                    GameElement.MoveIn2DArray(myPlayfield, position, position.Up());
+                    break;
+                case 1:
+                    GameElement.MoveIn2DArray(myPlayfield, position, position.Down());
+                    break;
+                case 2:
+                    GameElement.MoveIn2DArray(myPlayfield, position, position.Left());
+                    break;
+                case 3:
+                    GameElement.MoveIn2DArray(myPlayfield, position, position.Right());
+                    break;
+            }
+        }
+        public virtual void DoGameLogic(vector position, GameElement[,] myPlayfield, string input = "")
         {
 
         }
@@ -115,31 +72,27 @@ namespace BoardGame
 
     class Monster : GameElement, IMoveable
     {
-        public Monster(int inX, int inY) : base(inX, inY)
+        public Monster() : base()
         {
             backGround = ConsoleColor.DarkYellow;
             foreGround = ConsoleColor.Black;
-            position.X = inX;
-            position.Y = inY;
             drawChar = "M";
         }
-        public void Move() 
-        { 
+        public void Move()
+        {
         }
     }
     class RockDestroyer : Monster
     {
-        public RockDestroyer(int inX, int inY) : base(inX, inY)
+        public RockDestroyer() : base()
         {
             backGround = ConsoleColor.Blue;
             foreGround = ConsoleColor.Black;
-            position.X = inX;
-            position.Y = inY;
             drawChar = "D";
         }
-        public override void DoGameLogic(GameElement[,] myPlayfield, string input)
+        public override void DoGameLogic(vector position, GameElement[,] myPlayfield, string input)
         {
-            if (myPlayfield[position.X - 1, position.Y] is Player)
+            if (myPlayfield[(int)position.X - 1, (int)position.Y] is Player)
             {
                 Console.BackgroundColor = ConsoleColor.Yellow;
                 Console.Clear();
@@ -152,25 +105,27 @@ namespace BoardGame
     }
     class Player : GameElement, IMoveable
     {
-        public Player(int inX, int inY) : base(inX, inY)
+        public Player() : base()
         {
             backGround = ConsoleColor.Red;
             foreGround = ConsoleColor.Yellow;
-            position.X = inX;
-            position.Y = inY;
             drawChar = "X";
         }
-        public override void DoGameLogic(GameElement[,] myPlayfield, string input)
+        public override void DoGameLogic(vector position, GameElement[,] myPlayfield, string input)
         {
-            if (playerNeedsUpdate) {
+            if (playerNeedsUpdate)
+            {
                 if (input == "UpArrow")
                 {
                     if (position.Y > 0)
                     {
-                        //move(myPlayfield, 0);
+                        move(position, myPlayfield, 0);
+                        //GameElement temp = myPlayfield[position.X, position.Y];
+                        //myPlayfield[position.X, position.Y - 1] = temp;
+                        //myPlayfield[position.X, position.Y] = new EmptyTile();
                         //Console.WriteLine("upupupupupupupupupupupupupupupupupupupupupupupupupupupup");
-                        myPlayfield[position.X, position.Y] = new EmptyTile(position.X, position.Y);
-                        myPlayfield[position.X, position.Y - 1] = new Player(position.X, position.Y - 1);
+                        //myPlayfield[position.X, position.Y] = new EmptyTile(position.X, position.Y);
+                        //myPlayfield[position.X, position.Y - 1] = new Player(position.X, position.Y - 1);
                     }
 
                 }
@@ -179,18 +134,18 @@ namespace BoardGame
                     if (position.Y < 19)
                     {
                         //move(myPlayfield, 1);
-                        myPlayfield[position.X, position.Y] = new EmptyTile(position.X, position.Y);
-                        myPlayfield[position.X, position.Y + 1] = new Player(position.X, position.Y + 1);
+                        myPlayfield[(int)position.X, (int)position.Y] = new EmptyTile();
+                        myPlayfield[(int)position.X, (int)position.Y + 1] = new Player();
                     }
                 }
 
                 if (input == "LeftArrow")
                 {
-                    if (position.X > 0)
+                    if ((int)position.X > 0)
                     {
                         //move(myPlayfield, 2);
-                        myPlayfield[position.X, position.Y] = new EmptyTile(position.X, position.Y);
-                        myPlayfield[position.X - 1, position.Y] = new Player(position.X - 1, position.Y);
+                        myPlayfield[(int)position.X, (int)position.Y] = new EmptyTile();
+                        myPlayfield[(int)position.X - 1, (int)position.Y] = new Player();
                     }
                 }
                 if (input == "RightArrow")
@@ -198,10 +153,10 @@ namespace BoardGame
                     if (position.X < 19)
                     {
                         //move(myPlayfield, 3);
-                        myPlayfield[position.X, position.Y] = new EmptyTile(position.X, position.Y);
-                        myPlayfield[position.X + 1, position.Y] = new Player(position.X + 1, position.Y);
+                        myPlayfield[(int)position.X, (int)position.Y] = new EmptyTile();
+                        myPlayfield[(int)position.X + 1, (int)position.Y] = new Player();
                     }
-                } 
+                }
             }
             playerNeedsUpdate = false;
         }
@@ -211,25 +166,21 @@ namespace BoardGame
     }
     class Rock : GameElement
     {
-        public Rock(int inX, int inY) : base(inX, inY)
+        public Rock() : base()
         {
             backGround = ConsoleColor.Cyan;
             foreGround = ConsoleColor.Black;
-            position.X = inX;
-            position.Y = inY;
             drawChar = "O";
         }
 
     }
     class EmptyTile : GameElement
     {
-        public EmptyTile(int inX, int inY) : base(inX, inY)
+        public EmptyTile() : base()
         {
             backGround = ConsoleColor.DarkGray;
             foreGround = ConsoleColor.White;
             drawChar = " ";
-            position.X = inX;
-            position.Y = inY;
         }
 
     }
