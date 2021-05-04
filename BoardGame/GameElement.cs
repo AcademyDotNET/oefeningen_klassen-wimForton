@@ -14,7 +14,7 @@ namespace BoardGame
 
     abstract class GameElement
     {
-        public static vector worldPos = new vector(0, 0);
+        public static Vector worldPos = new Vector(0, 0);
         public static bool playerNeedsUpdate = true;
         //public vector2D position = new vector2D(0, 0);
         protected ConsoleColor backGround = ConsoleColor.Black;
@@ -28,7 +28,7 @@ namespace BoardGame
             //position.X = inX;
             //position.Y = inY;
         }
-        public virtual void Draw(vector position)
+        public virtual void Draw(Vector position)
         {
             Console.BackgroundColor = backGround;
             Console.ForegroundColor = foreGround;
@@ -37,7 +37,7 @@ namespace BoardGame
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
         }
-        public static void MoveIn2DArray(GameElement[,] myPlayfield, vector source, vector dest)
+        public static void MoveIn2DArray(GameElement[,] myPlayfield, Vector source, Vector dest)
         {
             if (dest.TestRange(0, 19, 0, 19))
             {
@@ -46,7 +46,7 @@ namespace BoardGame
                 myPlayfield[(int)source.X, (int)source.Y] = new EmptyTile();
             }
         }
-        public virtual void move(vector position, GameElement[,] myPlayfield, int input)
+        public virtual void move(Vector position, GameElement[,] myPlayfield, int input)
         {
             switch (input) 
             {
@@ -64,7 +64,7 @@ namespace BoardGame
                     break;
             }
         }
-        public virtual void DoGameLogic(vector position, GameElement[,] myPlayfield, string input = "")
+        public virtual void DoGameLogic(Vector position, GameElement[,] myPlayfield, string input = "")
         {
 
         }
@@ -90,7 +90,7 @@ namespace BoardGame
             foreGround = ConsoleColor.Black;
             drawChar = "D";
         }
-        public override void DoGameLogic(vector position, GameElement[,] myPlayfield, string input)
+        public override void DoGameLogic(Vector position, GameElement[,] myPlayfield, string input)
         {
             if (myPlayfield[(int)position.X - 1, (int)position.Y] is Player)
             {
@@ -111,7 +111,7 @@ namespace BoardGame
             foreGround = ConsoleColor.Yellow;
             drawChar = "X";
         }
-        public override void DoGameLogic(vector position, GameElement[,] myPlayfield, string input)
+        public override void DoGameLogic(Vector position, GameElement[,] myPlayfield, string input)
         {
             if (playerNeedsUpdate)
             {

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+//using Microsoft.Xna.Framework.Input;
 
 namespace BoardGame
 {
@@ -7,16 +10,69 @@ namespace BoardGame
 
         static void Main(string[] args)
         {
-            PlayGame();         
+            //PlayGame();         
 
-            vector vecA = new vector(3,5);
-            vector vecB = new vector(3,5);
-            vecA = vecA + vecB;
-            Console.WriteLine($"X = {vecA.X}, Y = {vecA.Y}");
+            //Vector vecA = new Vector(3,5);
+            //Vector vecB = new Vector(3,5);
 
-            Console.WriteLine(test<int>(5));
-            Console.WriteLine(test2<int>(5));
+            //Console.WriteLine("vergelijking 1");
+            //Console.WriteLine(vecA.Equals(vecB));
+            //Console.WriteLine(vecA == vecB);
+            //Console.WriteLine("------------------------");
+            //Console.WriteLine("optelling");
+            //vecA = vecA + vecB;
+            //Console.WriteLine($"X = {vecA.X}, Y = {vecA.Y}");
+            //Console.WriteLine("------------------------");
+            //Console.WriteLine("vergelijking 2");
+            //Console.WriteLine(vecA.Equals(vecB));
+            //Console.WriteLine(vecA == vecB);
+            //Console.WriteLine("------------------------");
+
+            //Console.WriteLine(test<int>(5));
+            //Console.WriteLine(test2<string>("5"));
+            //Console.WriteLine("any key to start anim");
+            //Console.ReadLine();
+            PlayAnim();
         }
+
+        private static void PlayAnim()
+        {
+            int counter = 0;
+            Console.Clear();
+            Console.CursorVisible = false;
+            List<Vector> myPointCloud = new List<Vector>();
+            myPointCloud.Add(new Vector(-5.0, 5.0, 5.0));
+            myPointCloud.Add(new Vector(5.0, 5.0, 5.0));
+            myPointCloud.Add(new Vector(-5.0, -5.0, 5.0));
+            myPointCloud.Add(new Vector(5.0, -5.0, 5.0));
+            myPointCloud.Add(new Vector(-5.0, 5.0, -5.0));
+            myPointCloud.Add(new Vector(5.0, 5.0, -5.0));
+            myPointCloud.Add(new Vector(-5.0, -5.0, -5.0));
+            myPointCloud.Add(new Vector(5.0, -5.0, -5.0));
+            while (true)
+            {
+                counter++;
+                Console.CursorVisible = false;
+                Console.SetCursorPosition(0, 0);
+                Console.WriteLine(counter);
+            for (int i = 0; i < myPointCloud.Count; i++)
+                {
+                    myPointCloud[i].draw(" ");
+                    myPointCloud[i].RotateEuler(5);
+                    if(myPointCloud[i].Z < 0)
+                    {
+                        myPointCloud[i].draw(".");
+                    }
+                    else { 
+                        myPointCloud[i].draw("o"); 
+                    }
+                    
+                }
+                System.Threading.Thread.Sleep(1);
+            //Console.ReadLine();
+            }
+        }
+
         public static T test<T>(T p)
         {
             T bla = p;
@@ -76,7 +132,7 @@ namespace BoardGame
             {
                 for (int row = 0; row < 20; row++)//rows
                 {
-                    vector position = new vector(collumn, row);
+                    Vector position = new Vector(collumn, row);
                     myPlayfield[collumn, row].Draw(position);
                 }
             }
@@ -92,7 +148,7 @@ namespace BoardGame
                 {
                     for (int row = 0; row < 20; row++)//rows
                     {
-                        vector position = new vector(collumn, row);
+                        Vector position = new Vector(collumn, row);
                         myPlayfield[collumn, row].DoGameLogic(position, myPlayfield, input);//gelukkig wordt de player hier getriggerd voor de destroyer(collumn links is eerst)
                         loopTeller++;
                     }
@@ -101,7 +157,7 @@ namespace BoardGame
                 {
                     for (int row = 0; row < 20; row++)//rows
                     {
-                        vector position = new vector(collumn, row);
+                        Vector position = new Vector(collumn, row);
                         myPlayfield[collumn, row].Draw(position);
                     }
                 }
