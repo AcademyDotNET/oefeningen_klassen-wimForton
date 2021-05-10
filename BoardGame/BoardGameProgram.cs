@@ -38,9 +38,13 @@ namespace BoardGame
         private static void PlayAnim()
         {
             int counter = 0;
+            double rotation = 0;
             Console.Clear();
             Console.CursorVisible = false;
             List<Vector> myPointCloud = new List<Vector>();
+            Matrix myMatrix = new Matrix();
+            ConsoleColor tempColor = ConsoleColor.White;
+           
             myPointCloud.Add(new Vector(-5.0, 5.0, 5.0));
             myPointCloud.Add(new Vector(5.0, 5.0, 5.0));
             myPointCloud.Add(new Vector(-5.0, -5.0, 5.0));
@@ -51,24 +55,82 @@ namespace BoardGame
             myPointCloud.Add(new Vector(5.0, -5.0, -5.0));
             while (true)
             {
-                counter++;
                 Console.CursorVisible = false;
+                if (counter == 1999)
+                {
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.Clear();
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Clear();
+                    Console.BackgroundColor = ConsoleColor.DarkBlue;
+                    Console.Clear();
+                    Console.BackgroundColor = ConsoleColor.Black;
+                    Console.Clear();
+                }
+                if (counter > 2000) myMatrix.MatrixDraw();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.SetCursorPosition(0, 0);
                 Console.WriteLine(counter);
-            for (int i = 0; i < myPointCloud.Count; i++)
+                Console.SetCursorPosition(0, 20);
+                Console.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+                //if (counter % 2 == 1) System.Threading.Thread.Sleep(1);
+                for (int i = 0; i < myPointCloud.Count; i++)
                 {
-                    myPointCloud[i].draw(" ");
-                    myPointCloud[i].RotateEuler(5);
-                    if(myPointCloud[i].Z < 0)
-                    {
-                        myPointCloud[i].draw(".");
-                    }
-                    else { 
-                        myPointCloud[i].draw("o"); 
-                    }
-                    
+                    Vector temp = Vector.GetEulerRotation(myPointCloud[i], rotation * 0.333, rotation * 0.5, rotation, "zxy");
+                    temp.draw(" ", tempColor);
                 }
-                System.Threading.Thread.Sleep(1);
+                counter++;
+                if (counter % 500 < 250)
+                {
+                    rotation += 0.08;
+                }
+                else
+                {
+                    rotation += 0.01;
+                }
+                for (int i = 0; i < myPointCloud.Count; i++)
+                {
+                    Vector temp = Vector.GetEulerRotation(myPointCloud[i], rotation * 0.333, rotation * 0.5, rotation, "zxy");
+                    if(temp.Z < 0)
+                    {
+                        if (counter % 500 < 250)
+                        {
+                            //Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            temp.draw(".", ConsoleColor.DarkCyan);
+                        }
+                        else
+                        {
+                            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+                            temp.draw("*", ConsoleColor.DarkYellow);
+                        }
+                        //Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        
+                        if (counter % 500 < 250)
+                        {
+                            tempColor = ConsoleColor.Cyan;
+                        }
+                        else
+                        {
+                            tempColor = ConsoleColor.Yellow;
+                        }
+                    }
+                    else {
+                        if (counter % 500 < 250)
+                        {
+                            temp.draw("o", tempColor);
+                        }
+                        else if(counter % 20 < 10)
+                        {
+                            temp.draw("X", tempColor);
+                        }
+                        else
+                        {
+                            temp.draw(".", tempColor);
+                        } 
+                    }
+
+                }
+                if(counter%2 == 1) System.Threading.Thread.Sleep(1);
             //Console.ReadLine();
             }
         }

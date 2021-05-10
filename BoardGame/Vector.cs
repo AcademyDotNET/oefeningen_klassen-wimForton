@@ -7,6 +7,10 @@ using System.Numerics;
 
 namespace BoardGame
 {
+    /*interface Vector
+    {
+        public void draw(string c, ConsoleColor colr);
+    }*/
     class Vector
     {
         public double X { get; set; }
@@ -60,12 +64,40 @@ namespace BoardGame
             X = X * Math.Cos(rad) - Z * Math.Sin(rad);
             Z = tempX * Math.Sin(rad) + Z * Math.Cos(rad);
         }
-        public static Vector RotateEuler(Vector inVector, double angleX, double angleY, double angleZ)
+        public static Vector GetEulerRotation(Vector inVector, double angleX, double angleY, double angleZ, string rotationOrder)
         {
             Vector result;
-            double resultX = inVector.X * Math.Cos(angleX) - inVector.Y * Math.Sin(angleX);
-            double resultY = inVector.X * Math.Sin(angleX) + inVector.Y * Math.Cos(angleX);
-            result = new Vector(resultX, resultY);
+            double resultX = inVector.X;
+            double resultY = inVector.Y;
+            double resultZ = inVector.Z;
+            for (int i = 0; i < 3; i++) {
+                char axis = rotationOrder[i];
+                double calcX = 0.0;
+                double calcY = 0.0;
+                double calcAngle = 0.0;
+
+                if (axis == 'x') { calcX = resultY; calcY = resultZ; calcAngle = angleX; }
+                if (axis == 'y') { calcX = resultX; calcY = resultZ; calcAngle = angleY; }
+                if (axis == 'z') { calcX = resultX; calcY = resultY; calcAngle = angleZ; }
+
+                if (axis == 'x')
+                {
+                    resultY = calcX * Math.Cos(calcAngle) - calcY * Math.Sin(calcAngle);
+                    resultZ = calcX * Math.Sin(calcAngle) + calcY * Math.Cos(calcAngle);
+                }
+                if (axis == 'y')
+                {
+                    resultX = calcX * Math.Cos(calcAngle) - calcY * Math.Sin(calcAngle);
+                    resultZ = calcX * Math.Sin(calcAngle) + calcY * Math.Cos(calcAngle);
+                }
+                if (axis == 'z')
+                {
+                    resultX = calcX * Math.Cos(calcAngle) - calcY * Math.Sin(calcAngle);
+                    resultY = calcX * Math.Sin(calcAngle) + calcY * Math.Cos(calcAngle);
+                }
+
+            }
+            result = new Vector(resultX, resultY, resultZ);
             return result;
         }
         public bool TestRange(double minX, double maxX, double minY, double maxY)
@@ -119,12 +151,38 @@ namespace BoardGame
             }
             return gelijk;
         }
-        public void draw(string c)
+        public void clear(string c, ConsoleColor colr)
         {
-            int x = (int)(X * ((Z + 5) * 0.03 + 1.0) * 2 + 35);
-            int y = (int)(Y * ((Z + 5) * 0.03 + 1.0) + 15);
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            int x = (int)(X * ((Z + 5) * 0.03 + 1.0) * 2 + 70); //(int)(X * 2.1 + 70);
+            int y = (int)(Z * 0.2 + Y * -0.15 + 25);
             Console.SetCursorPosition(x, y);
             Console.WriteLine(c);
+            Console.SetCursorPosition(x, y + 1);
+            Console.WriteLine(c);
+            Console.ForegroundColor = colr;
+            x = (int)(X * ((Z + 5) * 0.03 + 1.0) * 2 + 70);
+            y = (int)(Y * ((Z + 5) * 0.03 + 1.0) + 13);
+            Console.SetCursorPosition(x, y);
+            Console.WriteLine(c);
+
         }
+        public void draw(string c, ConsoleColor colr)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            int x = (int)(X * ((Z + 5) * 0.03 + 1.0) * 2 + 70); //(int)(X * 2.1 + 70);
+            int y = (int)(Z * 0.2 + Y * -0.15 + 25);
+            Console.SetCursorPosition(x, y);
+            Console.WriteLine(c);
+            Console.SetCursorPosition(x, y + 1);
+            Console.WriteLine(c);
+            Console.ForegroundColor = colr;
+            x = (int)(X * ((Z + 5) * 0.03 + 1.0) * 2 + 70);
+            y = (int)(Y * ((Z + 5) * 0.03 + 1.0) + 13);
+            Console.SetCursorPosition(x, y);
+            Console.WriteLine(c);
+
+        }
+
     }
 }
