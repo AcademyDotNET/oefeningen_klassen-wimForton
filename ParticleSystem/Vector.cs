@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 
-namespace BoardGame
+namespace ParticleSystem
 {
     /*interface Vector
     {
@@ -26,6 +26,15 @@ namespace BoardGame
         {
             X = inX; Y = inY;
             Dimensions = 2;
+        }
+        public void Set(double inX, double inY, double inZ)
+        {
+            X = inX; Y = inY; Z = inZ;
+            Dimensions = 3;
+        }
+        public static Vector setNew(double inX, double inY, double inZ)
+        {
+            return new Vector(inX, inY, inZ);
         }
 
         public static Vector operator +(Vector d1, Vector d2)
@@ -91,6 +100,11 @@ namespace BoardGame
 
             return result;
         }
+        public static double length(Vector v1)
+        {
+            double result = Math.Sqrt(Math.Pow(v1.X, 2.0) + Math.Pow(v1.Y, 2.0) + Math.Pow(v1.Z, 2.0));
+            return result;
+        }
         public static Vector RotateEuler(Vector inVector, double angle)
         {
             Vector result;
@@ -152,30 +166,6 @@ namespace BoardGame
             return result;
         }
 
-        public Vector Up()
-        {
-            Vector temp = new Vector(X, Y);
-            temp.Y--;
-            return temp;
-        }
-        public Vector Down()
-        {
-            Vector temp = new Vector(X, Y);
-            temp.Y++;
-            return temp;
-        }
-        public Vector Left()
-        {
-            Vector temp = new Vector(X, Y);
-            temp.X--;
-            return temp;
-        }
-        public Vector Right()
-        {
-            Vector temp = new Vector(X, Y);
-            temp.X++;
-            return temp;
-        }
         public override bool Equals(object o)
         {
             bool gelijk = true;
