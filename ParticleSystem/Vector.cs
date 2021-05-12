@@ -100,6 +100,17 @@ namespace ParticleSystem
 
             return result;
         }
+        //public bool CompareTo(object obj)
+        //{
+        //    Vector temp = (Vector)obj; //Zetten de parameter om naar land
+        //    bool result = false; 
+        //    if (length(this) > length(temp)) return false;
+        //    //if (Oppervlakte < temp.Oppervlakte) return -1;
+        //    //if (this.Inwoners > temp.Inwoners) return 1;
+        //    //if (this.Inwoners < temp.Inwoners) return -1;
+
+        //    return result;
+        //}
         public static double length(Vector v1)
         {
             double result = Math.Sqrt(Math.Pow(v1.X, 2.0) + Math.Pow(v1.Y, 2.0) + Math.Pow(v1.Z, 2.0));
@@ -183,37 +194,10 @@ namespace ParticleSystem
             }
             return gelijk;
         }
-        public void clear(string c, ConsoleColor colr)
+        public override string ToString()
         {
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            int x = (int)(X * ((Z + 5) * 0.03 + 1.0) * 2 + 70); //(int)(X * 2.1 + 70);
-            int y = (int)(Z * 0.2 + Y * -0.15 + 25);
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine(c);
-            Console.SetCursorPosition(x, y + 1);
-            Console.WriteLine(c);
-            Console.ForegroundColor = colr;
-            x = (int)(X * ((Z + 5) * 0.03 + 1.0) * 2 + 70);
-            y = (int)(Y * ((Z + 5) * 0.03 + 1.0) + 13);
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine(c);
-
+            string vector = $"{X},{Y},{Z}";
+            return vector;
         }
-        public void draw(string c, ConsoleColor colr)
-        {
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            int x = (int)(X * ((Z + 5) * 0.03 + 1.0) * 2 + 70); //(int)(X * 2.1 + 70);
-            int y = (int)(Z * 0.2 + Y * -0.15 + 25);
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine(c);
-            Console.SetCursorPosition(x, y + 1);
-            Console.WriteLine(c);
-            Console.ForegroundColor = colr;
-            x = (int)(X * ((Z + 5) * 0.03 + 1.0) * 2 + 70);
-            y = (int)(Y * ((Z + 5) * 0.03 + 1.0) + 13);
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine(c);
-        }
-
     }
 }

@@ -10,7 +10,7 @@ namespace BoardGame
 
         static void Main(string[] args)
         {
-            //PlayGame();         
+            PlayGame();         
 
             //Vector vecA = new Vector(3,5);
             //Vector vecB = new Vector(3,5);
@@ -32,7 +32,7 @@ namespace BoardGame
             //Console.WriteLine(test2<string>("5"));
             //Console.WriteLine("any key to start anim");
             //Console.ReadLine();
-            PlayAnim();
+            //PlayAnim();
         }
 
         private static void PlayAnim()

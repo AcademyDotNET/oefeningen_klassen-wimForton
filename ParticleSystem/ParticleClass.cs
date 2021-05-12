@@ -10,8 +10,10 @@ namespace ParticleSystem
     {
         //public Vector Pos;
     }
-    class Particle
+    class Particle: I3DObject
     {
+        public List<Particle> ConstraintNeighbors { get; set; }
+        public List<double> RestLengths { get; set; }
         public int ParticleInstance { get; set; }
         public Vector Pos { get; set; }
         public Vector PrevPos { get; set; }
@@ -23,9 +25,10 @@ namespace ParticleSystem
         public Vector Drag { get; set; }
         public double Age { get; set; }
         public double Lifespan { get; set; }
-        public Particle(int inParticleInstance = 0, Vector inPos = null, Vector inRot = null, Vector inVel = null, Vector inRGB = null, double inSize = 1.0, double inMass = 1.0, double inDrag = 0.999, double inSpan = 2.0)
+        public Particle(int inParticleInstance = 0, Vector inPos = null, Vector inRot = null, Vector inVel = null, Vector inRGB = null, double inSize = 1.0, double inMass = 1.0, double inDrag = 0.999, double inSpan = 2.0, List<Particle> inConstraintNB = null, List<double> inRestLengths = null)
         {
             ParticleInstance = inParticleInstance;
+            ConstraintNeighbors = inConstraintNB != null ? inConstraintNB : new List<Particle>();
             Pos = inPos != null ? inPos : new Vector(0, 0, 0);
             PrevPos = inPos != null ? inPos : new Vector(0, 0, 0);
             Rot = inRot != null ? inRot : new Vector(0, 0, 0);
