@@ -9,13 +9,13 @@ namespace ParticleSystem
 {
     class Save3DObject
     {
-        public static void SaveToCSV(ParticleEmitter inParticles, int frameNr)
+        public static void SaveToCSV(ParticleSystems inParticles, int frameNr, string fileName)
         {
-            writeCsvStreamWriter(inParticles, frameNr);
+            writeCsvStreamWriter(inParticles, frameNr, fileName);
         }
-        public static void writeCsvStreamWriter(ParticleEmitter inParticles, int frameNr)
+        public static void writeCsvStreamWriter(ParticleSystems inParticles, int frameNr, string fileName)
         {
-            using (StreamWriter streamWriter = new StreamWriter(@"H:\cursus_informatica\Oefening_classes\ParticleSequence\Particles" + Convert.ToString(frameNr) + ".csv"))
+            using (StreamWriter streamWriter = new StreamWriter(fileName + Convert.ToString(frameNr) + ".csv"))
             {
                 streamWriter.Write(inParticles);
             }

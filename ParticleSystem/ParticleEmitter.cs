@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ParticleSystem
 {
-    class ParticleEmitter: IParticleSystem
+    class ParticleEmitter: ParticleSystems
     {
-        public List<Particle> myParticles = new List<Particle>();
+        //public List<Particle> myParticles = new List<Particle>();
         private double Gravity { get; set; } = 0;
-        private Vector EmitPos = new Vector(0, 0, 0);
+        private double LifeSpan { get; set; }
         private bool RecycleParticles { get; set; } = false;
         private double Explosion { get; set; } = 0;
         private double Drag { get; set; } = 0.999;
@@ -21,33 +21,35 @@ namespace ParticleSystem
         {
             Console.WriteLine("Bingo");
         }
-        public ParticleEmitter(int inParticleMaxAmount = 20, Vector inEmitPos = null, double inExplosion = 1.0, double inGravity = 1.0, double friction = 0.999, bool recycle = false, double turbulenceStrength = 0, double turbulenceSize = 0)
+        public ParticleEmitter(string inName, int inParticleMaxAmount = 20, Vector inEmitPos = null, double inExplosion = 1.0, double inGravity = 1.0, double friction = 0.999, bool recycle = false, double inLifeSpan = 2, double turbulenceStrength = 0, double turbulenceSize = 0)
         {
+            Name = inName;
             Gravity = inGravity;
             EmitPos = inEmitPos;
             Explosion = inExplosion;
             Drag = friction;
             RecycleParticles = recycle;
+            LifeSpan = inLifeSpan;
             for (int i = 0; i < inParticleMaxAmount; i++)
             {
                 myParticles.Add(new Particle());
                 StartParticle(myParticles[i]);
-            }
-            
+            }  
         }
-        public void StartParticle(Particle inparticle) {
+        public override void StartParticle(Particle inParticle) {
             double velocityX = (myRandom.NextDouble() - 0.5) * Explosion;
             double velocityY = (myRandom.NextDouble() - 0.5) * Explosion;
             double velocityZ = (myRandom.NextDouble() - 0.5) * Explosion;
-            inparticle.ParticleInstance = myRandom.Next(33, 122);
-            inparticle.Pos = EmitPos;
-            inparticle.Vel = new Vector(velocityX, velocityY, velocityZ);
-            inparticle.Age = 0.0;
-            inparticle.ParticleInstance = myRandom.Next(33, 122);
-            inparticle.RGB = new Vector((int)(myRandom.NextDouble() * 255), (int)(myRandom.NextDouble() * 20), (int)(myRandom.NextDouble() * 255));
-            inparticle.Lifespan =  2 + myRandom.NextDouble();
+            inParticle.Pos = EmitPos;
+            inParticle.Mass = myRandom.NextDouble() * 0.5;
+            inParticle.Vel = new Vector(velocityX, velocityY, velocityZ);
+            inParticle.Age = 0.0;
+            inParticle.Drag  = Vector.setNew(Drag, Drag, Drag);
+            inParticle.ParticleInstance = myRandom.Next(33, 122);
+            inParticle.RGB = new Vector((int)(myRandom.NextDouble() * 255), (int)(myRandom.NextDouble() * 20), (int)(myRandom.NextDouble() * 255));
+            inParticle.Lifespan = LifeSpan + myRandom.NextDouble();
         }
-        public void UpdateParticles()
+        public override void UpdateParticles()
         {
             for (int i = 0; i < myParticles.Count; i++)
             {
@@ -56,7 +58,7 @@ namespace ParticleSystem
                     myParticles[i].PrevPos = myParticles[i].Pos;
                     myParticles[i].Age += 0.01;
 
-                    if (myParticles[i].Age >= myParticles[i].Lifespan || Vector.length(myParticles[i].Vel) < 0.03)
+                    if (myParticles[i].Age >= myParticles[i].Lifespan || (double)myParticles[i].Vel < 0.03)
                     {
                         if (RecycleParticles)
                         {
@@ -80,22 +82,10 @@ namespace ParticleSystem
         }
         public static void CollideEdges(Particle inParticle)
         {
-            if (inParticle.Pos.X >= Console.WindowWidth * 0.5 -2 || inParticle.Pos.X <= 1) inParticle.Vel.X *= -1;
-            if (inParticle.Pos.Y >= Console.WindowHeight - 4) inParticle.Vel.Y *= -1;
-        }
-        public override string ToString()
-        {
-            string particleString = "";
-            foreach (var item in myParticles)
-            {
-                particleString += $"{item.Pos},";
-                particleString += $"{item.RGB},";
-                particleString += $"{item.Vel}";
-                particleString += "\n";
-            }
-            return particleString;
+            //if (inParticle.Pos.X >= Console.WindowWidth * 0.5 -2 || inParticle.Pos.X <= 1) inParticle.Vel.X *= -1;
+            //if (inParticle.Pos.Y >= Console.WindowHeight - 4) inParticle.Vel.Y *= -1;
+            if (inParticle.Pos.Y >= 70) inParticle.Vel.Y *= -0.9;
         }
 
     }
-
 }

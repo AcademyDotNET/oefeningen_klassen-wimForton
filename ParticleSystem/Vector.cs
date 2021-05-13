@@ -36,7 +36,6 @@ namespace ParticleSystem
         {
             return new Vector(inX, inY, inZ);
         }
-
         public static Vector operator +(Vector d1, Vector d2)
         {
             //vector2D result = new vector2D();
@@ -54,6 +53,27 @@ namespace ParticleSystem
                 result = new Vector(0.0, 0.0);
                 result.X = d1.X + d2.X;
                 result.Y = d1.Y + d2.Y;
+            }
+
+            return result;
+        }
+        public static Vector operator -(Vector d1, Vector d2)
+        {
+            //vector2D result = new vector2D();
+            //T v1 = 0.0;
+            Vector result = new Vector(0.0, 0.0);
+            if (d1.Dimensions == 3 || d2.Dimensions == 3)
+            {
+                result = new Vector(0.0, 0.0, 0.0);
+                result.X = d1.X - d2.X;
+                result.Y = d1.Y - d2.Y;
+                result.Z = d1.Z - d2.Z;
+            }
+            else
+            {
+                result = new Vector(0.0, 0.0);
+                result.X = d1.X - d2.X;
+                result.Y = d1.Y - d2.Y;
             }
 
             return result;
@@ -79,6 +99,27 @@ namespace ParticleSystem
 
             return result;
         }
+        public static Vector operator /(Vector d1, Vector d2)
+        {
+            //vector2D result = new vector2D();
+            //T v1 = 0.0;
+            Vector result = new Vector(0.0, 0.0);
+            if (d1.Dimensions == 3 || d2.Dimensions == 3)
+            {
+                result = new Vector(0.0, 0.0, 0.0);
+                result.X = d1.X / d2.X;
+                result.Y = d1.Y / d2.Y;
+                result.Z = d1.Z / d2.Z;
+            }
+            else
+            {
+                result = new Vector(0.0, 0.0);
+                result.X = d1.X / d2.X;
+                result.Y = d1.Y / d2.Y;
+            }
+
+            return result;
+        }
         public static Vector operator *(Vector d1, double d2)
         {
             //vector2D result = new vector2D();
@@ -100,20 +141,109 @@ namespace ParticleSystem
 
             return result;
         }
-        //public bool CompareTo(object obj)
-        //{
-        //    Vector temp = (Vector)obj; //Zetten de parameter om naar land
-        //    bool result = false; 
-        //    if (length(this) > length(temp)) return false;
-        //    //if (Oppervlakte < temp.Oppervlakte) return -1;
-        //    //if (this.Inwoners > temp.Inwoners) return 1;
-        //    //if (this.Inwoners < temp.Inwoners) return -1;
+        public static Vector operator /(Vector d1, double d2)
+        {
+            //vector2D result = new vector2D();
+            //T v1 = 0.0;
+            Vector result = new Vector(0.0, 0.0);
+            if (d1.Dimensions == 3)
+            {
+                result = new Vector(0.0, 0.0, 0.0);
+                result.X = d1.X / d2;
+                result.Y = d1.Y / d2;
+                result.Z = d1.Z / d2;
+            }
+            else
+            {
+                result = new Vector(0.0, 0.0);
+                result.X = d1.X / d2;
+                result.Y = d1.Y / d2;
+            }
 
-        //    return result;
-        //}
+            return result;
+        }
+        /*
+        public static bool operator ==(Vector v1, Vector v2)
+        {
+            return (double)v1 == (double)v2;
+        }
+        public static bool operator !=(Vector v1, Vector v2)
+        {
+            if (v1 == null || v2 == null) return true;
+            return (double)v1 != (double)v2;
+        }
+        public static bool operator <(Vector v1, Vector v2)
+        {
+            return (double)v1 < (double)v2;
+        }
+        public static bool operator >(Vector v1, Vector v2)
+        {
+            return (double)v1 > (double)v2;
+        }
+        public static bool operator >=(Vector v1, Vector v2)
+        {
+            return (double)v1 >= (double)v2;
+        }
+        public static bool operator <=(Vector v1, Vector v2)
+        {
+            return (double)v1 <= (double)v2;
+        }
+        */
         public static double length(Vector v1)
         {
             double result = Math.Sqrt(Math.Pow(v1.X, 2.0) + Math.Pow(v1.Y, 2.0) + Math.Pow(v1.Z, 2.0));
+            return result;
+        }
+        public static explicit operator double(Vector v1)//does the same as length
+        {
+            double result = Math.Sqrt(Math.Pow(v1.X, 2.0) + Math.Pow(v1.Y, 2.0) + Math.Pow(v1.Z, 2.0));
+            return result;
+        }
+        public static Vector Lerp(Vector v1, Vector v2, double weight)
+        {
+            Vector result = v1 * (1 - weight) + v2 * weight;
+            return result;
+        }
+        public static Vector Normalize(Vector v1)
+        {
+            Vector result = new Vector(0.0,0.0,0.0);
+            if((double)v1 != 0)
+            {
+                result.X = v1.X / (double)v1;
+                result.Y = v1.Y / (double)v1;
+                result.Z = v1.Z / (double)v1;
+            }
+            else
+            {
+                result.Z = 1.0;
+            }
+            return result;
+        }
+        public static Vector CrossProduct(Vector v1, Vector v2)
+        {
+            Vector result = Vector.setNew(0, 0, 0);
+            
+            result.X = v1.Y * v2.Z - v1.Z * v2.Y;
+            result.Y = v1.Z * v2.X - v1.X * v2.Z;
+            result.Z = v1.X * v2.Y - v1.Y * v2.X;
+
+            result = Vector.Normalize(result);
+            return result;
+        }
+        public static Vector GetNormal(Vector v1, Vector v2, Vector v3)
+        {
+            Vector result = Vector.setNew(0, 0, 0);
+            v2 -= v1;
+            v3 -= v1;
+            result = Vector.CrossProduct(v2, v3);
+            return result;
+        }
+        public static Vector Pow(Vector v1, double pow)
+        {
+            Vector result = v1;
+            result.X = Math.Pow(result.X, pow);
+            result.Y = Math.Pow(result.Y, pow);
+            result.Z = Math.Pow(result.Z, pow);
             return result;
         }
         public static Vector RotateEuler(Vector inVector, double angle)
@@ -176,10 +306,15 @@ namespace ParticleSystem
             }
             return result;
         }
-
+        public void  SetRange(double minX, double maxX, double minY, double maxY, double minZ, double maxZ)
+        {
+            X = Math.Clamp(X, minX, maxX);
+            Y = Math.Clamp(Y, minY, maxY);
+            Z = Math.Clamp(Z, minZ, maxZ);
+        }
         public override bool Equals(object o)
         {
-            bool gelijk = true;
+            bool gelijk = false;
             Console.WriteLine(o.GetType());
             if (GetType() != o.GetType())
             {
@@ -188,7 +323,7 @@ namespace ParticleSystem
             else
             {
                 Vector temp = o as Vector;
-                if (X == temp.X && Y == temp.Y)
+                if (X == temp.X && Y == temp.Y && Z == temp.Z)
                     gelijk = true;
                 else gelijk = false;
             }

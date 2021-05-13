@@ -29,7 +29,7 @@ namespace ParticleSystem
         //        }
         //    }
         //}
-        public static void DrawParticlesToConsole2D(ParticleEmitter inParticles)
+        public static void DrawParticlesToConsole2D(ParticleSystems inParticles)
         {
             foreach (var inParticle in inParticles.myParticles)
             {
@@ -43,12 +43,12 @@ namespace ParticleSystem
                 if (prevx < Console.WindowWidth && prevx > 0 && prevy < Console.WindowHeight && prevy >= 0)
                 {
                     Console.SetCursorPosition(prevx, prevy);
-                    //Console.WriteLine(" ");
+                    Console.WriteLine(" ");
                 }
                 Console.ForegroundColor = ColorConvert.RgbToConsole(inParticle.RGB);
                 if (x < Console.WindowWidth && x > 0 && y < Console.WindowHeight && y >= 0)
                 {
-                    if (inParticle.Age < 0.1) Console.ForegroundColor = ConsoleColor.White;
+                    //if (inParticle.Age < 0.1) Console.ForegroundColor = ConsoleColor.White;
                     Console.SetCursorPosition(x, y);
                     Console.Write(drawChar);                  
                 }
