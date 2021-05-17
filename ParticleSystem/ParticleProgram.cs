@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
 
+
+
 namespace ParticleSystem
 {
     class ParticleProgram
@@ -69,7 +71,7 @@ namespace ParticleSystem
             int samplesPerFrame = 5;
             int lastFrame = 1000;
             List<ParticleSystems> myParticleSystems = new List<ParticleSystems>();
-            myParticleSystems.Add(new ParticleEmitter("EmitterA", 50, Vector.setNew(10, 16, 5), 0.1, 0.08, 0.99, true));
+            myParticleSystems.Add(new ParticleEmitter("EmitterA", 100, Vector.setNew(10, 16, 5), 0.1, 0.08, 0.99, true));
             myParticleSystems.Add(new ParticleTensionLine("RopeA", 30, Vector.setNew(10, 16, 0), Vector.setNew(40, 16, 0), 1.0, 0.004, 0.986));
             myParticleSystems.Add(new ParticleTensionLine("RopeB", 50, Vector.setNew(10, 16, 0), Vector.setNew(20, 10, 20), 1.0, 0.004, 0.986));
 
@@ -91,13 +93,11 @@ namespace ParticleSystem
                         Save3DObject.SaveToCSV(ParticleSystem, frameNumber, @"H:\cursus_informatica\Oefening_classes\ParticleSequence\" + ParticleSystem.Name);
                     }
                 }
-                //pull some ropes (not future proof)
-                
-                myParticleSystems[0].EmitPos.Z = Math.Sin((double)counter * 0.02) * 15;
+                //pull some ropes (not future proof)             
                 myParticleSystems[1].myParticles[0].Pos.Z = Math.Sin((double)counter * 0.01) * 15;
                 myParticleSystems[1].myParticles[myParticleSystems[1].myParticles.Count /2].Pos.Y = Math.Cos((double)counter * 0.04) * 8;
                 myParticleSystems[2].myParticles[0].Pos.Z = Math.Sin((double)counter * 0.01) * 15;
-                
+                myParticleSystems[0].EmitPos = myParticleSystems[1].myParticles[myParticleSystems[1].myParticles.Count / 4].Pos;
                 //dynamics
                 for (int i = 0; i < myParticleSystems.Count; i++)
                 {

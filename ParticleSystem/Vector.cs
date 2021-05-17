@@ -167,11 +167,19 @@ namespace ParticleSystem
         {
             return (double)v1 == (double)v2;
         }
+        public static bool operator ==(Vector v1, null)
+        {
+            return v1 == null;
+        }
         public static bool operator !=(Vector v1, Vector v2)
         {
-            if (v1 == null || v2 == null) return true;
             return (double)v1 != (double)v2;
         }
+        public static bool operator !=(Vector v1, null)
+        {
+            return true;
+        }
+        */
         public static bool operator <(Vector v1, Vector v2)
         {
             return (double)v1 < (double)v2;
@@ -188,7 +196,7 @@ namespace ParticleSystem
         {
             return (double)v1 <= (double)v2;
         }
-        */
+        
         public static double length(Vector v1)
         {
             double result = Math.Sqrt(Math.Pow(v1.X, 2.0) + Math.Pow(v1.Y, 2.0) + Math.Pow(v1.Z, 2.0));

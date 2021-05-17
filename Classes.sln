@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonTester", "PokemonTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "List", "List\List.csproj", "{C15CB7A2-2B30-4C94-B7FA-76FFDC49CDA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassenOvererving", "ClassenOvererving\ClassenOvererving.csproj", "{3A124848-5275-4A2C-8AC2-225ACA119853}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassenOvererving_balletjes", "ClassenOvererving\ClassenOvererving_balletjes.csproj", "{3A124848-5275-4A2C-8AC2-225ACA119853}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OverervingAdvanced", "OverervingAdvanced\OverervingAdvanced.csproj", "{0B596590-E815-4C30-B841-22AD9F950D03}"
 EndProject
@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericListTester", "Generi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExeptionHandlingCSV", "ConsoleApp1\ExeptionHandlingCSV.csproj", "{54030D05-DEA5-47F6-A0E2-C5B100CF7895}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticleSystem", "ParticleSystem\ParticleSystem.csproj", "{3229E91C-E58F-415D-9937-DFA35E7A6579}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticleSystem", "ParticleSystem\ParticleSystem.csproj", "{3229E91C-E58F-415D-9937-DFA35E7A6579}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
